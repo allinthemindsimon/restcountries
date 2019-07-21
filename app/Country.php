@@ -14,16 +14,8 @@ class Country extends Model
         'code_2',
         'code_3',
         'calling_codes',
+        'currencies',
+        'languages',
         'flag_location'
     ];
-
-    public function currencyLinks()
-    {
-        return $this->hasMany('App\CountryCurrencyLink');
-    }
-
-    public function languageLinks()
-    {
-        return $this->hasMany('App\CountryLanguageLink');
-    }
 }

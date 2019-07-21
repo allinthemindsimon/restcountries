@@ -22,6 +22,8 @@ class CreateCountries extends Migration
             $table->string('code_2', 120);
             $table->string('code_3', 120);
             $table->string('calling_codes', 120);
+            $table->string('currencies', 120);
+            $table->string('languages', 200);
             $table->string('flag_location', 200);
             $table->timestamps();
         });

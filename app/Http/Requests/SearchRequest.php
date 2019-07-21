@@ -24,27 +24,27 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'country_name'  => 'max:120|alpha',
-            'country_code'  => 'max:120|alpha',
-            'capital_city'  => 'max:120|alpha',
-            'currency_code'  => 'max:120|alpha',
-            'language'  => 'max:120|alpha'
+            'name'  => 'max:120|alpha|nullable',
+            'code'  => 'max:120|alpha|nullable',
+            'capital'  => 'max:120|alpha|nullable',
+            'currencies'  => 'max:120|alpha|nullable',
+            'languages'  => 'max:120|alpha|nullable'
         ];
     }
 
     public function messages()
     {
         return [
-            'country_name.alpha' => "The search string must contain letters only",
-            'country_name.max' => "I'm sorry but the search string may be no longer than 120 characters",
-            'country_code.alpha' => "The search string must contain letters only",
-            'country_code.max' => "I'm sorry but the search string may be no longer than 120 characters",
-            'capital_city.alpha' => "The search string must contain letters only",
-            'capital_city.max' => "I'm sorry but the search string may be no longer than 120 characters",
-            'currency_code.alpha' => "The search string must contain letters only",
-            'currency_code.max' => "I'm sorry but the search string may be no longer than 120 characters",
-            'language.alpha' => "The search string must contain letters only",
-            'language.max' => "I'm sorry but the search string may be no longer than 120 characters"
+            'name.alpha' => "The search input must contain letters only",
+            'name.max' => "I'm sorry but the search input may be no longer than 120 characters",
+            'code.alpha' => "The search input must contain letters only",
+            'code.max' => "I'm sorry but the search input may be no longer than 120 characters",
+            'capital.alpha' => "The search input must contain letters only",
+            'capital.max' => "I'm sorry but the search input may be no longer than 120 characters",
+            'currencies.alpha' => "The search input must contain letters only",
+            'currencies.max' => "I'm sorry but the search input may be no longer than 120 characters",
+            'languages.alpha' => "The search input must contain letters only",
+            'languages.max' => "I'm sorry but the search input may be no longer than 120 characters"
         ];
     }
 }

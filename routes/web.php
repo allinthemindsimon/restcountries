@@ -18,4 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'CountryController@index')->name('country');
+Route::get('/country', 'CountryController@show');
 Route::post('/country/search', 'CountryController@search');
