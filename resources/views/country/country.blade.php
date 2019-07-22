@@ -13,22 +13,22 @@
                 <div class="card-body form-group">
                     <form>
                         <div class="row mb-1">
-                            <div class="col-md-4">Country Name</div><div class="col-md-8"><input class="form-control" type='text' name='country_name' value='{{$data['name'] ?? ''}}'></div>
+                            <div class="col-md-4">Country Name</div><div class="col-md-8"><input class="form-control" type='text' name='country_name' value='{{$data['name'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">International Dialling Code</div><div class="col-md-8"><input class="form-control" type='text' name='calling-codes' value='{{$data['calling_codes'] ?? ''}}'></div>
+                            <div class="col-md-4">International Dialling Code</div><div class="col-md-8"><input class="form-control" type='text' name='calling-codes' value='{{$data['calling_codes'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">Region</div><div class="col-md-8"><input class="form-control" type='text' name='region' value='{{$data['region'] ?? ''}}'></div>
+                            <div class="col-md-4">Region</div><div class="col-md-8"><input class="form-control" type='text' name='region' value='{{$data['region'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">Capital</div><div class="col-md-8"><input class="form-control" type='text' name='capital' value='{{$data['capital'] ?? ''}}'></div>
+                            <div class="col-md-4">Capital</div><div class="col-md-8"><input class="form-control" type='text' name='capital' value='{{$data['capital'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">Timezones</div><div class="col-md-8"><input class="form-control" type='text' name='timezones' value='{{$data['timezones'] ?? ''}}'></div>
+                            <div class="col-md-4">Timezones</div><div class="col-md-8"><input class="form-control" type='text' name='timezones' value='{{$data['timezones'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">Currencies</div><div class="col-md-8"><input class="form-control" type='text' name='currencies' value='{{$data['currencies'] ?? ''}}'></div>
+                            <div class="col-md-4">Currencies</div><div class="col-md-8"><input class="form-control" type='text' name='currencies' value='{{$data['currencies'] ?? ''}}' readonly></div>
                         </div>
                     </form>
                         <hr class="mb-4">

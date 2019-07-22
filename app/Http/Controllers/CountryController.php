@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
-use Illuminate\Http\Request;
-use App\Http\Requests\SearchRequest;  //can't seem to get the external request validator to work, look at later
+use App\Http\Requests\SearchRequest;  //can't seem to get the external request validator to work as advetised, look at later
 
 class CountryController extends Controller
 {
@@ -27,7 +26,7 @@ class CountryController extends Controller
     {
         //Check DB for existence of search data. ((Could break this into neater functions later, maybe make them services))
 
-        //MySQL does not like "like statements" with "%%"
+        //MySQL does not like "like statements" with "%%" means doing this the hard way
         //get where clause straight. Ready for direct injection into Laravel syntax
 
         //Start query for the '=' values
@@ -74,7 +73,7 @@ class CountryController extends Controller
             $data = $country->toArray();
             return $this::show($data[0]);
         }
-        if (count($country) === 0) {
+        if (count($country) === 0) { //could rewrite this as a switch
             if ($request->name) {
                 $req = $request->name;
                 $data = json_decode(file_get_contents($this->url . 'name/' . $req));
@@ -165,6 +164,7 @@ class CountryController extends Controller
         $country->calling_codes = $this->sanitiseInput(implode(", ", $data->callingCodes));
         $country->currencies = $this->sanitiseInput($currencyCodes);
         $country->languages = $this->sanitiseInput($languages);
+        //we could download the flag to a local file but cloud is probably better for now
         $country->flag_location = $this->sanitiseInput($data->flag);
         $country->save();
         $data = $country->toArray();
@@ -177,7 +177,7 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function show($data = 'hello view')
+    public function show($data)
     {
         return view('country.country', ['data' => $data]);
     }

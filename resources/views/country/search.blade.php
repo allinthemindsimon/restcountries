@@ -40,7 +40,7 @@
                     </form>
                     @if ($errors->any())
                     <div class="col-md-12 alert-warning alert-block temp">
-                        <div class="">
+                        <div>
                             <ul>
                                 @foreach ($errors->all() as $error)
                                 <li>{{$error}}</li>

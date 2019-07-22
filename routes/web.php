@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+//no need to secure these for this app.
 Route::get('/home', 'CountryController@index')->name('country');
 Route::get('/country', 'CountryController@show');
 Route::post('/country/search', 'CountryController@search');

@@ -35,7 +35,6 @@
     setTimeout(function(){
         let elementTemp = document.getElementsByClassName('temp');
         if (elementTemp.length > 0) {
-            // elementTemp.remove();
             elementTemp[0].remove(elementTemp[0]);
         }
     }, 3500)

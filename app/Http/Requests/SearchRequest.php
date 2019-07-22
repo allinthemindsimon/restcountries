@@ -23,7 +23,6 @@ class SearchRequest extends FormRequest
      */
     public function rules()
     {
-        // required_without_all:code,capital,currencies,languages|  //doesn't seem to work as advertised  investigate later
         return [
             'name'  => 'sometimes|required_without_all:code,capital,currencies,languages|max:120',
             'code'  => 'sometimes|max:120',
