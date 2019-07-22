@@ -32,7 +32,7 @@
                             <div class="col-md-4">Language</div><div class="col-md-6"><input class="form-control" type='text' name='languages'></div>
                         </div>
                         <hr class="mb-4">
-                        <div class="row mb-1">
+                        <div class="row">
                             <div class='col-md-12'>
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
                             </div>

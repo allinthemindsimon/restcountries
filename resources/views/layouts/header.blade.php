@@ -18,6 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .flag {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

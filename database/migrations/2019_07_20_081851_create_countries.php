@@ -18,7 +18,7 @@ class CreateCountries extends Migration
             $table->string('name', 120);
             $table->string('capital', 120);
             $table->string('region', 120);
-            $table->string('timezones', 120);
+            $table->string('timezones', 300);
             $table->string('code_2', 120);
             $table->string('code_3', 120);
             $table->string('calling_codes', 120);

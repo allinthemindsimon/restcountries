@@ -23,28 +23,24 @@ class SearchRequest extends FormRequest
      */
     public function rules()
     {
+        // required_without_all:code,capital,currencies,languages|  //doesn't seem to work as advertised  investigate later
         return [
-            'name'  => 'max:120|alpha|nullable',
-            'code'  => 'max:120|alpha|nullable',
-            'capital'  => 'max:120|alpha|nullable',
-            'currencies'  => 'max:120|alpha|nullable',
-            'languages'  => 'max:120|alpha|nullable'
+            'name'  => 'sometimes|required_without_all:code,capital,currencies,languages|max:120',
+            'code'  => 'sometimes|max:120',
+            'capital'  => 'sometimes|max:120',
+            'currencies'  => 'sometimes|max:120',
+            'languages'  => 'sometimes|max:120'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.alpha' => "The search input must contain letters only",
-            'name.max' => "I'm sorry but the search input may be no longer than 120 characters",
-            'code.alpha' => "The search input must contain letters only",
-            'code.max' => "I'm sorry but the search input may be no longer than 120 characters",
-            'capital.alpha' => "The search input must contain letters only",
-            'capital.max' => "I'm sorry but the search input may be no longer than 120 characters",
-            'currencies.alpha' => "The search input must contain letters only",
-            'currencies.max' => "I'm sorry but the search input may be no longer than 120 characters",
-            'languages.alpha' => "The search input must contain letters only",
-            'languages.max' => "I'm sorry but the search input may be no longer than 120 characters"
+            'name.max' => "I'm sorry but the name input may be no longer than 120 characters",
+            'code.max' => "I'm sorry but the code input may be no longer than 120 characters",
+            'capital.max' => "I'm sorry but the capital input may be no longer than 120 characters",
+            'currencies.max' => "I'm sorry but the currencies input may be no longer than 120 characters",
+            'languages.max' => "I'm sorry but the languages input may be no longer than 120 characters"
         ];
     }
 }
