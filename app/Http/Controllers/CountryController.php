@@ -37,7 +37,7 @@ class CountryController extends Controller
         foreach ($request->all() as $key => $val) {
             if ($key[1] == 'o' && $val) {
                 $val = htmlspecialchars(strip_tags($val));
-                $whereStart = "`code_2` = '?' OR `code_3` = '?'";
+                $whereStart = "`code_2` = ? OR `code_3` = ?";
                 $bindingsStart = $val . ', ' . $val;
             }
             if ($key[0] != '_' && $key[1] != 'o' && $val) {
@@ -50,12 +50,12 @@ class CountryController extends Controller
         $first = true;
         foreach ($whereCont as $key => $val) {
             if ($first) {
-                $whereClause .= "`$key` LIKE '?' ";
+                $whereClause .= "`$key` LIKE ? ";
                 $bindingsLike .= "%$val%";
                 $first = false;
             } else {
-                $whereClause .= " OR `$key` LIKE '?' ";
-                $bindingsLike .= ", %$val%";
+                $whereClause .= " OR `$key` LIKE ? ";
+                $bindingsLike .= ",%$val%";
             }
         }
         if ($whereStart && $whereClause) {
@@ -65,52 +65,78 @@ class CountryController extends Controller
             $whereClause = $whereStart . $whereClause;
             $bindings = $bindingsStart . $bindingsLike;
         }
-
+        $bindings = explode(',', $bindings);
         //get data from database.
+        // \DB::enableQueryLog();
         $country = Country::whereRaw($whereClause, $bindings)->get();
-
+        // dd(\DB::getQueryLog());
+        // dd($country);
         if (count($country) === 1) {
             $data = $country->toArray();
             return $this::show($data[0]);
         }
+        if (count($country) > 1) {
+            return back()->withErrors(['There is more than one country with those parameters']);
+        }
         if (count($country) === 0) { //could rewrite this as a switch
             if ($request->name) {
-                $req = $request->name;
-                $data = json_decode(file_get_contents($this->url . 'name/' . $req));
-                if (count($data) === 1) {
-                    return $this::store($data[0]);
-                };
+                $name = $this->getDataFromAPI('name', $request->name);
+                if ($name['status'] === 'success') {
+                    return $this::show($name[0]);
+                }
+                return back()->withErrors([$name[0]]);
             }
             if ($request->code) {
-                $req = $request->code;
-                $data = json_decode(file_get_contents($this->url . 'alpha/' . $req));
-                if (count($data) === 1) {
-                    return $this::store($data[0]);
-                };
+                $code = $this->getDataFromAPI('alpha', $request->code);
+                if ($code['status'] === 'success') {
+                    return $this::show($code[0]);
+                }
+                return back()->withErrors([$code[0]]);
             }
             if ($request->capital) {
-                $req = $request->capital;
-                $data = json_decode(file_get_contents($this->url . 'capital/' . $req));
-                if (count($data) === 1) {
-                    return $this::store($data[0]);
-                };
+                $capital = $this->getDataFromAPI('capital', $request->capital);
+                if ($capital['status'] === 'success') {
+                    return $this::show($capital[0]);
+                }
+                return back()->withErrors([$capital[0]]);
             }
             if ($request->currencies) {
-                $req = $request->currencies;
-                $data = json_decode(file_get_contents($this->url . 'currency/' . $req));
-                if (count($data) === 1) {
-                    return $this::store($data[0]);
-                };
+                $currencies = $this->getDataFromAPI('currency', $request->currencies);
+                if ($currencies['status'] === 'success') {
+                    return $this::show($currencies[0]);
+                }
+                return back()->withErrors([$currencies[0]]);
             }
             if ($request->languages) {
-                $req = $request->languages;
-                $data = json_decode(file_get_contents($this->url . 'lang/' . $req));
-                if (count($data) === 1) {
-                    return $this::store($data[0]);
-                };
+                $languages = $this->getDataFromAPI('lang', $request->languages);
+                if ($languages['status'] === 'success') {
+                    return $this::show($languages[0]);
+                }
+                return back()->withErrors([$languages[0]]);
             }
-            abort(404);
+            return back()->withErrors(['There is not a country with those parameters']);
         };
+    }
+
+    function getDataFromAPI($urlParam, $requestParam)
+    {
+        if ($this->get_http_response_code($this->url . $urlParam . '/' . $requestParam) != '200') {
+            return ['status' => 'error', 'There is not a country with those parameters'];
+        } else {
+            $data = json_decode(file_get_contents($this->url . $urlParam . '/' . $requestParam));
+            if (count($data) === 1) {
+                $insert = $this::store($data);
+                return ['status' => 'success', $insert];
+            } else {
+                return ['status' => 'error', 'There is more than one country with those parameters'];
+            }
+        }
+    }
+
+    function get_http_response_code($url)
+    {
+        $headers = get_headers($url);
+        return substr($headers[0], 9, 3);
     }
 
     function sanitiseInput($stringToBeSanitised)
@@ -130,6 +156,11 @@ class CountryController extends Controller
      */
     public function store($data)
     {
+        //check if data coming through as the first member of an array or not
+        //the API send through in different formats depending on search parameter
+        if (is_array($data)) {
+            $data = $data[0];
+        }
         //extract and tidy currency codes
         $currencyCodes = '';
         $first = true;
@@ -167,8 +198,9 @@ class CountryController extends Controller
         //we could download the flag to a local file but cloud is probably better for now
         $country->flag_location = $this->sanitiseInput($data->flag);
         $country->save();
+
         $data = $country->toArray();
-        return $this::show($data);
+        return $data;
     }
 
     /**

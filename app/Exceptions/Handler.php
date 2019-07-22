@@ -46,7 +46,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return redirect('/home')->with('status', "This system can return one country only. Please try again");
         return parent::render($request, $exception);
     }
 }
