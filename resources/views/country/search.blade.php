@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body form-group">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-warning temp" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
