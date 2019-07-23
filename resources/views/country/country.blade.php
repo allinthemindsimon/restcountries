@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-8"><h1>Country Information</h1></div><div class="col-md-4">Country Flag<img class="flag" src='{{$data['flag_location'] ?? ''}}'></div>
+                        <div class="col-md-8"><h1>Country Information</h1></div><div class="col-md-4"><img class="flag" src='{{$data['flag_location'] ?? ''}}'></div>
                     </div>
                 </div>
                 <div class="card-body form-group">
@@ -25,7 +25,7 @@
                             <div class="col-md-4">Capital</div><div class="col-md-8"><input class="form-control" type='text' name='capital' value='{{$data['capital'] ?? ''}}' readonly></div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-4">Timezones</div><div class="col-md-8"><input class="form-control" type='text' name='timezones' value='{{$data['timezones'] ?? ''}}' readonly></div>
+                            <div class="col-md-4">Timezones</div><div class="col-md-8"><textarea rows="3" class="form-control" name='timezones'  readonly>{{$data['timezones'] ?? ''}}'</textarea></div>
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-4">Currencies</div><div class="col-md-8"><input class="form-control" type='text' name='currencies' value='{{$data['currencies'] ?? ''}}' readonly></div>

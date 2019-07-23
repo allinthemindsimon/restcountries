@@ -21,6 +21,7 @@
     <style>
         .flag {
             max-width: 100%;
+            border: 1px black solid;
         }
     </style>
 </head>

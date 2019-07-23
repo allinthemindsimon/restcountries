@@ -16,6 +16,7 @@ class CreateCountries extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 120);
+            $table->string('alt_spellings', 200);
             $table->string('capital', 120);
             $table->string('region', 120);
             $table->string('timezones', 300);

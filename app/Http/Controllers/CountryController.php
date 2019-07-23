@@ -66,6 +66,8 @@ class CountryController extends Controller
             $bindings = $bindingsStart . $bindingsLike;
         }
         $bindings = explode(',', $bindings);
+        //API seems to search alt spellings as well, so added name + alt spellings to DB and change name to search that in DB
+        $whereClause = str_replace("name", "alt_spellings", $whereClause);
         //get data from database.
         // \DB::enableQueryLog();
         $country = Country::whereRaw($whereClause, $bindings)->get();
@@ -184,9 +186,9 @@ class CountryController extends Controller
                 $languages .= ", $language->name";
             }
         }
-
         $country = new Country;
         $country->name = $this->sanitiseInput($data->name);
+        $country->alt_spellings = $this->sanitiseInput($data->name) . ', ' . $this->sanitiseInput(implode(", ", $data->altSpellings));
         $country->capital = $this->sanitiseInput($data->capital);
         $country->region = $this->sanitiseInput($data->region);
         $country->timezones = $this->sanitiseInput(implode(", ", $data->timezones));
