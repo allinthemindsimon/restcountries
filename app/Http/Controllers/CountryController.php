@@ -82,6 +82,10 @@ class CountryController extends Controller
         }
         if (count($country) === 0) { //could rewrite this as a switch
             if ($request->name) {
+                $name = $this->getDataFromAPI('name', $request->name . '?fullText=true');
+                if ($name['status'] === 'success') {
+                    return $this::show($name[0]);
+                }
                 $name = $this->getDataFromAPI('name', $request->name);
                 if ($name['status'] === 'success') {
                     return $this::show($name[0]);
