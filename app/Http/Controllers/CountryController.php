@@ -69,10 +69,8 @@ class CountryController extends Controller
         //API seems to search alt spellings as well, so added name + alt spellings to DB and change name to search that in DB
         $whereClause = str_replace("name", "alt_spellings", $whereClause);
         //get data from database.
-        // \DB::enableQueryLog();
         $country = Country::whereRaw($whereClause, $bindings)->get();
-        // dd(\DB::getQueryLog());
-        // dd($country);
+
         if (count($country) === 1) {
             $data = $country->toArray();
             return $this::show($data[0]);
@@ -80,6 +78,7 @@ class CountryController extends Controller
         if (count($country) > 1) {
             return back()->withErrors(['There is more than one country with those parameters']);
         }
+        //nothing in the DB, off to the outside World to search for data
         if (count($country) === 0) { //could rewrite this as a switch
             if ($request->name) {
                 $name = $this->getDataFromAPI('name', $request->name . '?fullText=true');
